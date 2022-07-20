@@ -1,0 +1,12 @@
+services:
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  coraza:
+    build:
+      context: ../
+      dockerfile: Dockerfile
