@@ -45,7 +45,7 @@ func main() {
 		}
 		*r.URL = *u
 
-		delHeaders := []string{"X-Coraza-ID"}
+		delHeaders := []string{"X-Coraza-ID", "X-Coraza-URL"}
 		for _, h := range delHeaders {
 			r.Header.Del(h)
 		}
