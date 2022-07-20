@@ -1,12 +1,27 @@
 services:
 
+  coreruleset:
+    build:
+      context: coreruleset/
+      dockerfile: Dockerfile
+    volumes:
+      - crs_shared:/coraza:rw
+  coraza:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    command: -addr 0.0.0.0 /coreruleset/coraza.conf /coreruleset/coreruleset/crs-setup.conf.example /coreruleset/coreruleset/rules/*.conf
+    volumes:
+      - crs_shared:/coreruleset:ro
+    depends_on:
+      - coreruleset
   nginx:
     image: nginx:latest
     ports:
       - "8080:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  coraza:
-    build:
-      context: ../
-      dockerfile: Dockerfile
+    depends_on:
+      - coraza
+volumes:
+  crs_shared: {}
