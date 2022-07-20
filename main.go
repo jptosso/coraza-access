@@ -7,6 +7,7 @@ import (
 
 	"github.com/jptosso/coraza-waf/v2"
 	"github.com/jptosso/coraza-waf/v2/seclang"
+	"github.com/jptosso/coraza-waf/v2/types/variables"
 )
 
 const (
@@ -56,6 +57,7 @@ func main() {
 			}
 		}()
 		tx.ID = id
+		tx.GetCollection(variables.UniqueID).SetIndex("", 0, id)
 		if it, err := tx.ProcessRequest(r); err != nil {
 			http.Error(w, err.Error(), httpStatusError)
 			fmt.Println("Request error:", err)
